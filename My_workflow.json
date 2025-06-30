@@ -1,0 +1,112 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        20,
+        0
+      ],
+      "id": "d2397229-9c72-4ed0-a1c1-bad73e2bda24",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3a204b17-613d-4026-8a23-17e76647dddb",
+              "name": "message",
+              "value": "Hello Abdullah, your first workflow works! 🎉",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        240,
+        0
+      ],
+      "id": "6b0afbcc-b4c2-48c9-b104-787d9d025ac2",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "url": "https://randomuser.me/api/",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        460,
+        0
+      ],
+      "id": "bc16922e-c049-48c6-8a03-62ae9e412f31",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "const user = items[0].json.results[0];\n\nreturn [{\n  json: {\n    firstName: user.name.first,\n    lastName: user.name.last,\n    email: user.email,\n    city: user.location.city,\n    country: user.location.country\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        320,
+        140
+      ],
+      "id": "dc423283-b319-416d-b192-cbe3037d29ba",
+      "name": "Code"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "300542f3-cfe1-44e4-9b2a-f2824ea7781c",
+  "meta": {
+    "instanceId": "c2d7999db4d998d1ba6e7e83361f278810ae94d28df21e0d68127d92940cf1a9"
+  },
+  "id": "qXDzJizbfKVRSOwp",
+  "tags": []
+}
